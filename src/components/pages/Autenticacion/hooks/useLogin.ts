@@ -134,7 +134,7 @@ export const useLogin = (onLoginSuccess?: (session: BackendSession) => void) => 
 
         try {
           // Llamar al endpoint de callback
-          const response = await fetch(`${GOOGLE_CALLBACK_URL}?code=${googleCode}`);
+          const response = await fetch(`${GOOGLE_CALLBACK_URL}?code=${googleCode}&redirect=false`);
           
           if (!response.ok) {
             throw new Error('Error en la autenticación con Google');

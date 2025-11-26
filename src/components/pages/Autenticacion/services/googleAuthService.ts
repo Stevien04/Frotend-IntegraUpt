@@ -14,7 +14,7 @@ export interface GoogleCallbackResponse {
 
 export const googleAuthService = {
   async handleGoogleCallback(code: string): Promise<GoogleCallbackResponse> {
-    const response = await fetch(`https://backendgoogle.onrender.com/auth/google/callback?code=${code}`, {
+    const response = await fetch(`https://backendgoogle.onrender.com/auth/google/callback?code=${code}&redirect=false`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
