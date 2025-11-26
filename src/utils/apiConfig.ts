@@ -91,7 +91,7 @@ export const QR_RESERVAS_API_BASE_URL = resolveBaseUrl(
 );
 
 export const USUARIOS_API_BASE_URL = resolveBaseUrl(
-  env.VITE_USUARIOS_BACKEND_URL ?? env.VITE_BACKEND_URL,
+  env.VITE_USUARIOS_BACKEND_URL,
   DEFAULT_USUARIOS_BACKEND_URL
 );
 
