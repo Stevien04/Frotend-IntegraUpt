@@ -45,9 +45,8 @@ export const LOGIN_API_BASE_URL = resolveBaseUrl(
   DEFAULT_LOGIN_BACKEND_URL
 );
 
-// 🔥 Todo lo demás lo dejamos igual 🔥
 export const RESERVAS_API_BASE_URL = resolveBaseUrl(
-  env.VITE_RESERVAS_BACKEND_URL ?? env.VITE_BACKEND_URL,
+  env.VITE_RESERVAS_BACKEND_URL,
   DEFAULT_RESERVAS_BACKEND_URL
 );
 
