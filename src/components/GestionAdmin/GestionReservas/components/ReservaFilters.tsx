@@ -16,7 +16,11 @@ interface ReservaFiltersProps {
   onChange: <K extends keyof ReservaFiltersState>(field: K, value: ReservaFiltersState[K]) => void;
   onReset: () => void;
   allowCatalogFilters: boolean;
-  lockedFacultadNombre?: string; // ← AGRÉGALO
+
+  // ← AGREGA ESTO
+  lockedFacultadNombre?: string | null;
+  lockedEscuelaNombre?: string | null;
+  isSupervisorWithoutEscuela?: boolean;
 }
 
 
