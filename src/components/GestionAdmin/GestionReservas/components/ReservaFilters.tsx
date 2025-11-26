@@ -16,7 +16,9 @@ interface ReservaFiltersProps {
   onChange: <K extends keyof ReservaFiltersState>(field: K, value: ReservaFiltersState[K]) => void;
   onReset: () => void;
   allowCatalogFilters: boolean;
+  lockedFacultadNombre?: string; // ← AGRÉGALO
 }
+
 
 const renderOptions = (options: SimpleOption[], placeholder: string) => (
   <>
