@@ -20,7 +20,7 @@ const env = import.meta.env;
 // ==========================
 // URLs por defecto (fallback)
 // ==========================
-const DEFAULT_LOGIN_BACKEND_URL = "http://localhost:8081";
+const DEFAULT_LOGIN_BACKEND_URL = "http://localhost:8080";
 const DEFAULT_ESPACIOS_BACKEND_URL = "http://localhost:8082";
 const DEFAULT_HORARIOCURSO_BACKEND_URL = "http://localhost:8083";
 const DEFAULT_RESERVAS_BACKEND_URL = "http://localhost:8084";

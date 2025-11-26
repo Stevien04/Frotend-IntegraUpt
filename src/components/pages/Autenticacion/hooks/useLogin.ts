@@ -1,7 +1,11 @@
 import { useState, useCallback, useEffect } from 'react';
+import { getLoginApiUrl } from '../../../../utils/apiConfig';
 import type { LoginType, BackendSession } from '../types';
 import { generateCaptcha } from '../captchaUtils';
 import { autenticacionService } from '../services/autenticacionService';
+
+const GOOGLE_LOGIN_URL = getLoginApiUrl('/auth/google/login');
+const GOOGLE_CALLBACK_URL = getLoginApiUrl('/auth/google/callback');
 
 export const useLogin = (onLoginSuccess?: (session: BackendSession) => void) => {
   const [selectedType, setSelectedType] = useState<LoginType | null>(null);
@@ -90,34 +94,34 @@ export const useLogin = (onLoginSuccess?: (session: BackendSession) => void) => 
   };
 
   const handleGoogleSignIn = useCallback(async () => {
-  console.log('Obteniendo URL de Google...');
-  setLoading(true);
-  setError(null);
+    console.log('Obteniendo URL de Google...');
+    setLoading(true);
+    setError(null);
 
-  try {
-    // Primero obtener la URL del backend
-    const response = await fetch('http://localhost:8080/auth/google/login');
-    
-    if (!response.ok) {
-      throw new Error('Error al obtener URL de Google');
-    }
+    try {
+      // Primero obtener la URL del backend
+      const response = await fetch(GOOGLE_LOGIN_URL);
 
-    const data = await response.json();
-    
-    if (data.success && data.url) {
-      // Ahora redirigir a la URL de Google
-      window.location.href = data.url;
-    } else {
-      throw new Error(data.message || 'Error en la respuesta del servidor');
+      if (!response.ok) {
+        throw new Error('Error al obtener URL de Google');
+      }
+
+      const data = await response.json();
+
+      if (data.success && data.url) {
+        // Ahora redirigir a la URL de Google
+        window.location.href = data.url;
+      } else {
+        throw new Error(data.message || 'Error en la respuesta del servidor');
+      }
+    } catch (err) {
+      const message = err instanceof Error
+        ? err.message
+        : 'Error al iniciar autenticación con Google';
+      setError(message);
+      setLoading(false);
     }
-  } catch (err) {
-    const message = err instanceof Error 
-      ? err.message 
-      : 'Error al iniciar autenticación con Google';
-    setError(message);
-    setLoading(false);
-  }
-}, []);
+  }, []);
 
   useEffect(() => {
     const handleGoogleCallback = async () => {
@@ -130,7 +134,7 @@ export const useLogin = (onLoginSuccess?: (session: BackendSession) => void) => 
 
         try {
           // Llamar al endpoint de callback
-          const response = await fetch(`http://localhost:8080/auth/google/callback?code=${googleCode}`);
+          const response = await fetch(`${GOOGLE_CALLBACK_URL}?code=${googleCode}`);
           
           if (!response.ok) {
             throw new Error('Error en la autenticación con Google');
