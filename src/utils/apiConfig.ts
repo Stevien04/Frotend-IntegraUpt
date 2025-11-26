@@ -61,7 +61,7 @@ export const HORARIOS_API_BASE_URL = resolveBaseUrl(
 );
 
 export const ESPACIOS_API_BASE_URL = resolveBaseUrl(
-  env.VITE_ESPACIOS_BACKEND_URL ?? env.VITE_BACKEND_URL,
+  env.VITE_ESPACIOS_BACKEND_URL,
   DEFAULT_ESPACIOS_BACKEND_URL
 );
 
