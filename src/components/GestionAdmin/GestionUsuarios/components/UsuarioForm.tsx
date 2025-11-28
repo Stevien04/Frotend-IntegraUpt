@@ -39,6 +39,14 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
 }) => {
   const tiposDoc = sortCatalogByNombre(catalogs.tiposDocumento);
   const roles = sortCatalogByNombre(catalogs.roles);
+  const rolesAdministrativos = React.useMemo(
+    () =>
+      roles.filter((rol) => {
+        const nombre = rol.nombre.toLowerCase();
+        return nombre === "administrador" || nombre === "supervisor";
+      }),
+    [roles]
+  );
   const escuelas = sortCatalogByNombre(catalogs.escuelas);
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -56,6 +64,7 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
             <input
               type="text"
               value={values.nombre}
+              maxLength={25}
               onChange={(event) => onChange("nombre", event.target.value)}
               placeholder="Ej. Dayan"
             />
@@ -65,6 +74,7 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
             <input
               type="text"
               value={values.apellido}
+              maxLength={25}
               onChange={(event) => onChange("apellido", event.target.value)}
               placeholder="Ej. Mamani Quispe"
             />
@@ -90,6 +100,9 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
             <input
               type="text"
               value={values.numDoc}
+              maxLength={20}
+              inputMode="numeric"
+              pattern="[0-9]*"
               onChange={(event) => onChange("numDoc", event.target.value)}
               placeholder="Ingresa el numero"
             />
@@ -101,6 +114,9 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
             <input
               type="tel"
               value={values.celular}
+              maxLength={9}
+              inputMode="numeric"
+              pattern="[0-9]*"
               onChange={(event) => onChange("celular", event.target.value)}
               placeholder="Opcional"
             />
@@ -129,6 +145,7 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
             <input
               type="email"
               value={values.correo}
+              maxLength={27}
               onChange={(event) => onChange("correo", event.target.value)}
               placeholder="usuario@upt.pe"
             />
@@ -141,6 +158,7 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
               <input
                 type={mode === "edit" && showPassword ? "text" : "password"}
                 value={values.password}
+                maxLength={100}
                 onChange={(event) => onChange("password", event.target.value)}
                 placeholder={
                   mode === "create"
@@ -175,7 +193,9 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
                 value={values.idEscuela}
                 onChange={(event) => onChange("idEscuela", event.target.value)}
               >
-                <option value="">{role === "docente" ? "Sin asignar" : "Selecciona una escuela"}</option>
+                <option value="">
+                  {role === "docente" ? "Selecciona una escuela" : "Selecciona una escuela"}
+                </option>
                 {escuelas.map((escuela) => (
                   <option key={escuela.idEscuela} value={escuela.idEscuela}>
                     {escuela.nombre}
@@ -188,6 +208,9 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
               <input
                 type="text"
                 value={values.codigoGenerico}
+                maxLength={role === "estudiante" ? 10 : 20}
+                inputMode={role === "estudiante" ? "numeric" : undefined}
+                pattern={role === "estudiante" ? "[0-9]*" : undefined}
                 onChange={(event) => onChange("codigoGenerico", event.target.value)}
                 placeholder={role === "docente" ? "Ej. DOC-2024-01" : "Ej. 2023076808"}
               />
@@ -233,7 +256,7 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
               Rol administrativo
               <select value={values.idRol} onChange={(event) => onChange("idRol", event.target.value)}>
                 <option value="">Selecciona un rol</option>
-                {roles.map((rol) => (
+                {rolesAdministrativos.map((rol) => (
                   <option key={rol.idRol} value={rol.idRol}>
                     {rol.nombre}
                   </option>
@@ -269,6 +292,9 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
               <input
                 type="text"
                 value={values.extension}
+                maxLength={5}
+                inputMode="numeric"
+                pattern="[0-9]*"
                 onChange={(event) => onChange("extension", event.target.value)}
                 placeholder="Opcional"
               />

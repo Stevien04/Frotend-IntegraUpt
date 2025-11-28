@@ -46,6 +46,7 @@ export const UsuarioFilters: React.FC<UsuarioFiltersProps> = ({
           <input
             type="text"
             value={search}
+            maxLength={25}
             onChange={(event) => onSearchChange(event.target.value)}
             placeholder={`Buscar ${roleLabel(role)} por nombre, codigo o correo`}
           />
